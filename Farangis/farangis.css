@@ -1,0 +1,18 @@
+@font-face {
+  font-family: "Farangis";
+  src: url("fonts/woff2/Farangis-Bold.woff2") format("woff2"),
+       url("fonts/woff/Farangis-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Farangis";
+  src: url("fonts/woff2/Farangis-Black.woff2") format("woff2"),
+       url("fonts/woff/Farangis-Black.woff") format("woff");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
