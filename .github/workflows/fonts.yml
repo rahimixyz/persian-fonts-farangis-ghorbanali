@@ -1,0 +1,15 @@
+name: fonts
+on: [push, pull_request]
+jobs:
+  build-and-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: sudo apt-get update && sudo apt-get install -y libraqm0
+      - run: pip install -r requirements.txt uharfbuzz skia-pathops
+      - name: Audit the committed fonts
+        run: python3 src/audit.py
+      - name: Rebuild from source and audit the result
+        run: python3 src/build.py build-check && python3 src/audit.py build-check/*/fonts/ttf/*.ttf
