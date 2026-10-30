@@ -1,7 +1,11 @@
+/* Farangis — Persian font by Alireza Rahimi, SIL OFL 1.1
+   https://github.com/rahimixyz/persian-fonts-farangis-ghorbanali */
+
 @font-face {
   font-family: "Farangis";
   src: url("fonts/woff2/Farangis-Bold.woff2") format("woff2"),
-       url("fonts/woff/Farangis-Bold.woff") format("woff");
+       url("fonts/woff/Farangis-Bold.woff") format("woff"),
+       url("fonts/ttf/Farangis-Bold.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -10,7 +14,8 @@
 @font-face {
   font-family: "Farangis";
   src: url("fonts/woff2/Farangis-Black.woff2") format("woff2"),
-       url("fonts/woff/Farangis-Black.woff") format("woff");
+       url("fonts/woff/Farangis-Black.woff") format("woff"),
+       url("fonts/ttf/Farangis-Black.ttf") format("truetype");
   font-weight: 900;
   font-style: normal;
   font-display: swap;
