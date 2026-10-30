@@ -1,7 +1,11 @@
+/* Ghorbanali — Persian font by Alireza Rahimi, SIL OFL 1.1
+   https://github.com/rahimixyz/persian-fonts-farangis-ghorbanali */
+
 @font-face {
   font-family: "Ghorbanali";
   src: url("fonts/woff2/Ghorbanali-Regular.woff2") format("woff2"),
-       url("fonts/woff/Ghorbanali-Regular.woff") format("woff");
+       url("fonts/woff/Ghorbanali-Regular.woff") format("woff"),
+       url("fonts/ttf/Ghorbanali-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -10,7 +14,8 @@
 @font-face {
   font-family: "Ghorbanali";
   src: url("fonts/woff2/Ghorbanali-Bold.woff2") format("woff2"),
-       url("fonts/woff/Ghorbanali-Bold.woff") format("woff");
+       url("fonts/woff/Ghorbanali-Bold.woff") format("woff"),
+       url("fonts/ttf/Ghorbanali-Bold.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
