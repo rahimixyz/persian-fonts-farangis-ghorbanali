@@ -1,0 +1,4 @@
+/* Both families in one file:
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rahimixyz/persian-fonts-farangis-ghorbanali@main/fonts.css"> */
+@import url("Ghorbanali/ghorbanali.css");
+@import url("Farangis/farangis.css");

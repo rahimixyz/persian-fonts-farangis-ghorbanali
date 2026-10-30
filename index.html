@@ -52,10 +52,38 @@
   </section>
 
   <section>
+    <h2>آزمون نمایش</h2>
+    <div class="meta">جمله‌های آزمون در اندازه‌های واقعی وب: ۱۲، ۱۴، ۱۶ و ۱۸ پیکسل</div>
+    <div id="tests"></div>
+  </section>
+
+  <section>
     <p>دریافت فایل‌ها و راهنمای استفاده در <a href="README.md">README</a> · مجوز <a href="OFL.txt">SIL Open Font License 1.1</a></p>
   </section>
 </main>
 <script>
+  const TESTS = [
+    'پپپ ببب تتت جچحخ سش عغ فقل ییکگ',
+    'فونت آرام و خوانا برای وب‌سایت‌ها',
+    'فارسی، طراحی، برنامه‌نویسی، جست‌وجو و نمایش اطلاعات',
+    '۱۲۳۴۵۶۷۸۹۰ | 1234567890 | ۱۲۳,۴۵۶٫۷۸ | ۲۵۰٬۰۰۰ تومان | (۱۴۰۵)',
+    'می‌روم، وب‌سایت، خانه‌ها، کتاب‌ها، مسئولیت، نشانه‌گذاری',
+  ];
+  const box = document.getElementById('tests');
+  for (const [fam, w] of [['Ghorbanali', 400], ['Ghorbanali', 700], ['Farangis', 700]]) {
+    const h = document.createElement('h3');
+    h.textContent = fam + ' ' + w;
+    h.style.cssText = 'font-size:15px;color:#6b6b6b;margin:20px 0 6px;font-family:Ghorbanali';
+    box.appendChild(h);
+    for (const size of [12, 14, 16, 18]) {
+      for (const t of TESTS) {
+        const p = document.createElement('p');
+        p.textContent = t;
+        p.style.cssText = `font-family:${fam};font-weight:${w};font-size:${size}px;margin:2px 0;line-height:1.9`;
+        box.appendChild(p);
+      }
+    }
+  }
   const samples = [...document.querySelectorAll('[data-sample]')];
   const orig = samples.map(e => e.textContent);
   document.getElementById('try').addEventListener('input', e => {

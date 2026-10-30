@@ -3,3 +3,4 @@ shapely>=2.0
 brotli
 ttfautohint-py
 pillow
+uharfbuzz

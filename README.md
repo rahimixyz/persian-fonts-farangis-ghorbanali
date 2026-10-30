@@ -1,82 +1,82 @@
+# Persian fonts: Farangis & Ghorbanali — فونت‌های فارسی فرنگیس و قربانعلی
+
+**[فارسی](#فارسی)** · **[English](#english)** · [صفحهٔ نمایش و آزمایش فونت](index.html) · [تغییرات](CHANGELOG.md)
+
 <div dir="rtl">
 
-# فونت‌های فرنگیس و قربانعلی
+## فارسی
 
 دو فونت فارسی رایگان و متن‌باز از **علیرضا رحیمی**.
 
-| فونت | کاربرد | وزن‌ها |
-|---|---|---|
-| **فرنگیس** (Farangis) | طراحی گرافیک: بنر، بیلبورد، پوستر، تابلوی بزرگراه، تیتر | ضخیم (Bold)، سیاه (Black) |
-| **قربانعلی** (Ghorbanali) | متن وب‌سایت و رابط کاربری | معمولی (Regular)، ضخیم (Bold) |
-
-## فرنگیس
-
-![فرنگیس](specimens/farangis.png)
-
-فرنگیس فونتی هندسی و پرقدرت به سبک کوفی مدرن است. گوشه‌ها تیز، فضاهای داخلی باز و نقطه‌ها مربعی و درشت‌اند. این ویژگی‌ها حروف را از فاصلهٔ دور، روی بنر و تابلوی بزرگراه، خوانا نگه می‌دارند.
-
-![حروف فرنگیس](specimens/farangis-chars.png)
-
-## قربانعلی
+| فونت | کاربرد | وزن‌ها | فرمت‌ها |
+|---|---|---|---|
+| **قربانعلی** (Ghorbanali) | متن وب‌سایت، اپلیکیشن و رابط کاربری | معمولی (۴۰۰)، ضخیم (۷۰۰) | WOFF2، WOFF، TTF، OTF |
+| **فرنگیس** (Farangis) | تیتر، بنر، بیلبورد، پوستر، تابلوی بزرگراه | ضخیم (۷۰۰)، سیاه (۹۰۰) | WOFF2، WOFF، TTF، OTF |
 
 ![قربانعلی](specimens/ghorbanali.png)
 
-قربانعلی فونتی آرام و گرد با ضخامت یکنواخت است. دندانه‌ها و فضاهای داخلی بازند و نقطه‌ها لوزی‌شکل‌اند، تا متن در اندازه‌های کوچک صفحهٔ وب هم خوانا بماند. فایل‌ها هینت شده‌اند تا روی ویندوز هم واضح نمایش داده شوند.
+![فرنگیس](specimens/farangis.png)
 
-![حروف قربانعلی](specimens/ghorbanali-chars.png)
+### سریع‌ترین راه: یک خط در HTML
 
-## نصب
-
-* **روی رایانه:** فایل‌های `.ttf` را از پوشهٔ `Farangis/fonts/ttf` یا `Ghorbanali/fonts/ttf` دانلود و نصب کنید. در فتوشاپ، ایلاستریتور، ورد و دیگر نرم‌افزارها با نام‌های Farangis و Ghorbanali در دسترس‌اند.
-* **در وب‌سایت:** پوشهٔ فونت را کنار فایل‌های سایت قرار دهید و فایل CSS آن را اضافه کنید:
+بدون دانلود و بدون نصب؛ در هر سایتی کار می‌کند، چه HTML ساده، چه وردپرس، لاراول، جنگو یا ری‌اکت:
 
 </div>
 
 ```html
-<link rel="stylesheet" href="Ghorbanali/ghorbanali.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rahimixyz/persian-fonts-farangis-ghorbanali@main/fonts.css">
 <style>
   body { font-family: "Ghorbanali", Tahoma, sans-serif; }
-  h1   { font-family: "Farangis", "Ghorbanali", sans-serif; font-weight: 900; }
+  h1, .banner { font-family: "Farangis", "Ghorbanali", sans-serif; font-weight: 900; }
 </style>
 ```
 
 <div dir="rtl">
 
-فونت‌ها فقط حروف فارسی را دارند. برای متن لاتین، مثل نمونهٔ بالا یک فونت جایگزین در `font-family` بگذارید.
+فقط یکی از دو فونت را می‌خواهید؟ به‌جای `fonts.css` از `Ghorbanali/ghorbanali.css` یا `Farangis/farangis.css` استفاده کنید.
 
-## پوشش نویسه‌ها
+### استفاده در هر محیط
 
-* همهٔ ۳۲ حرف الفبای فارسی با شکل‌های آغازی، میانی، پایانی و تنها
-* همزه و حروف همزه‌دار (ء آ أ إ ؤ ئ ۀ)، ة، و ي و ك عربی
-* ترکیب «لا» به‌صورت لیگاتور
-* ارقام فارسی (۰ تا ۹) با عرض یکسان، که برای ارقام عربی (٠ تا ٩) هم استفاده می‌شوند
-* علائم: ، ؛ ؟ ! . : « » ( ) - – — ٪ ٫ ٬ + = /
-* اعراب: فتحه، کسره، ضمه، تنوین‌ها، تشدید، سکون، الف مقصوره، همزهٔ بالا و پایین
-* نیم‌فاصله (ZWNJ) و کشیده (ـ)
+| محیط | روش |
+|---|---|
+| **HTML / هر سایت** | همان یک خط `<link>` بالا. یا پوشهٔ فونت را کنار فایل‌های سایت بگذارید و `ghorbanali.css` را لینک کنید. |
+| **وردپرس** | در «نمایش ← سفارشی‌سازی ← CSS اضافی» بنویسید: `@import url("https://cdn.jsdelivr.net/gh/rahimixyz/persian-fonts-farangis-ghorbanali@main/fonts.css");` و بعد `body { font-family: "Ghorbanali"; }` |
+| **PHP / لاراول** | خط `<link>` را در `resources/views/layouts/app.blade.php` داخل `<head>` بگذارید. برای میزبانی روی سرور خودتان، پوشهٔ `Ghorbanali` را در `public/fonts` کپی کنید و `{{ asset('fonts/Ghorbanali/ghorbanali.css') }}` را لینک کنید. |
+| **React / Next.js / Vue** | خط `<link>` را در `index.html` یا `app/layout` بگذارید، یا فایل‌های `woff2` را در `public/fonts` کپی کنید. در Next.js می‌توانید از `next/font/local` با فایل‌های `woff2` استفاده کنید. |
+| **پایتون** (تصویر و نمودار) | Pillow: `ImageFont.truetype("Ghorbanali-Regular.ttf", 32, layout_engine=ImageFont.Layout.RAQM)` · matplotlib: `font_manager.fontManager.addfont("Ghorbanali-Regular.ttf")` و بعد `rcParams["font.family"] = "Ghorbanali"` |
+| **اندروید** | فایل `ttf` را در `res/font/` بگذارید و `android:fontFamily="@font/ghorbanali_regular"` |
+| **iOS** | فایل `ttf` را به پروژه اضافه کنید، در `Info.plist` زیر `UIAppFonts` بنویسید و `UIFont(name: "Ghorbanali-Regular", size: 17)` |
+| **فلاتر** | در `pubspec.yaml` زیر `fonts:` فایل‌های `ttf` را معرفی کنید و `fontFamily: 'Ghorbanali'` |
+| **فتوشاپ، ایلاستریتور، فیگما، ورد، کنوا** | فایل‌های `otf` یا `ttf` را دانلود و روی سیستم نصب کنید. |
 
-## ساخت از روی سورس
+### دانلود
 
-همهٔ حروف با کد و از روی اسکلت خطی تعریف شده‌اند. پوشهٔ `src` شامل این فایل‌هاست:
+فایل‌ها در پوشه‌های [`Ghorbanali/fonts`](Ghorbanali/fonts) و [`Farangis/fonts`](Farangis/fonts) هستند و هر فرمت پوشهٔ جداگانه دارد:
+* `woff2`: بهترین برای وب، کوچک‌ترین حجم
+* `woff`: برای مرورگرهای قدیمی
+* `ttf`: برای اپلیکیشن، پایتون و نصب روی سیستم
+* `otf`: برای نرم‌افزارهای طراحی
 
-* `letters.py`: تعریف شکل حروف، ارقام و علائم
-* `geom.py`: تبدیل اسکلت به حروف توپر
-* `build.py`: تنظیم ضخامت و تناسب هر وزن، ساخت فایل‌های TTF، WOFF و WOFF2 به همراه قواعد اتصال حروف (OpenType)
+### پوشش نویسه‌ها
 
-</div>
+* همهٔ ۳۲ حرف فارسی با شکل‌های آغازی، میانی، پایانی و تنها؛ ترکیب «لا»؛ همزه و حروف همزه‌دار؛ ي، ك، ى و ة عربی
+* ارقام فارسی و عربی (۰ تا ۹) و **ارقام لاتین (0 تا 9)** با ارتفاع یکسان
+* علائم: ، ؛ ؟ ? ! . : « » ( ) [ ] - – — ٪ % ٫ ٬ + = / \ | * # < > ~ _ … • ×
+* اعراب، نیم‌فاصله و کشیده
+* حروف لاتین (A تا Z) را ندارند؛ برای متن انگلیسی یک فونت لاتین در `font-family` بگذارید.
 
-```bash
-pip install -r requirements.txt
-python3 src/build.py .          # فایل‌ها را در Farangis/fonts و Ghorbanali/fonts می‌سازد
-python3 src/specimens.py        # تصاویر نمونه را دوباره می‌سازد
-```
+### آزمون خودکار
 
-<div dir="rtl">
+هر تغییر در این مخزن به‌طور خودکار ساخته و بررسی می‌شود (`src/audit.py`):
+* هیچ نویسهٔ رایج فارسی جا نیفتاده باشد.
+* هر حرف در جمله‌های واقعی شکل اتصالی درست را بگیرد؛ این بررسی بر اساس جدول رسمی اتصال یونیکد انجام می‌شود.
+* محل اتصال حروف فاصله یا شکاف نداشته باشد.
+* هیچ بخشی از حروف بیرون از کادر خط بریده نشود.
+* اندازهٔ بدنهٔ حروف و فاصله‌ها در محدودهٔ فونت‌های وب استاندارد باشد.
 
-## مجوز
+### مجوز
 
-این فونت‌ها تحت مجوز [SIL Open Font License 1.1](OFL.txt) منتشر شده‌اند. استفاده در پروژه‌های شخصی و تجاری، از جمله چاپ، وب، اپلیکیشن و ویدیو، آزاد و رایگان است. فروش خود فایل فونت مجاز نیست و نسخه‌های تغییریافته باید نام دیگری داشته باشند.
-
-© ۲۰۲۶ علیرضا رحیمی
+[SIL Open Font License 1.1](OFL.txt). استفاده در پروژه‌های شخصی و تجاری، از جمله چاپ، وب، اپلیکیشن و ویدیو، آزاد و رایگان است. فروش خود فایل فونت مجاز نیست و نسخهٔ تغییریافته باید نام دیگری داشته باشد. © ۲۰۲۶ علیرضا رحیمی
 
 </div>
 
@@ -84,25 +84,49 @@ python3 src/specimens.py        # تصاویر نمونه را دوباره می
 
 ## English
 
-**Free Persian (Farsi) fonts for display and web — by Alireza Rahimi.** Open source, free for personal and commercial use (SIL Open Font License 1.1).
+**Free Persian (Farsi) fonts by Alireza Rahimi.** Open source, free for personal and commercial use (SIL Open Font License 1.1).
 
-| Font | Best for | Style | Weights | Files |
+| Font | Best for | Style | Weights | Formats |
 |---|---|---|---|---|
-| **Farangis** | Banners, billboards, posters, highway & street signage, headlines, logos | Geometric Kufi display, sharp corners, square dots, high legibility at a distance | Bold (700), Black (900) | TTF, WOFF2, WOFF |
-| **Ghorbanali** | Websites, apps, UI, body text | Rounded monoline sans, open counters, hinted for screens | Regular (400), Bold (700) | TTF, WOFF2, WOFF |
+| **Ghorbanali** | Websites, apps, UI, body text | Rounded monoline sans, open counters, hinted for screens | Regular (400), Bold (700) | WOFF2, WOFF, TTF, OTF |
+| **Farangis** | Banners, billboards, posters, highway & street signage, headlines, logos | Geometric Kufi display, sharp corners, square dots | Bold (700), Black (900) | WOFF2, WOFF, TTF, OTF |
 
-**Script coverage:** Persian / Farsi (fa-IR) alphabet with all contextual forms (isolated, initial, medial, final), lam-alef ligatures, Arabic-letter variants (ي ك ة ى), hamza forms, Persian digits ۰–۹ (also mapped to Arabic-Indic ٠–٩), Persian punctuation (، ؛ ؟ « » ٪ ٫ ٬), harakat/diacritics with mark positioning, ZWNJ (half-space) and tatweel. Shaping works through standard OpenType features (`init`, `medi`, `fina`, `rlig`, `mark`, `mkmk`) in HarfBuzz, browsers, Adobe apps, Microsoft Office and Figma. Latin letters are not included — pair with a Latin font via CSS fallback.
+### Use from a CDN (any website, no download)
 
-**Use on the web:**
-
-```css
-@import url("Ghorbanali/ghorbanali.css");
-body { font-family: "Ghorbanali", system-ui, sans-serif; }
-h1   { font-family: "Farangis", sans-serif; font-weight: 900; }
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rahimixyz/persian-fonts-farangis-ghorbanali@main/fonts.css">
+<style>
+  body { font-family: "Ghorbanali", system-ui, sans-serif; }
+  h1   { font-family: "Farangis", sans-serif; font-weight: 900; }
+</style>
 ```
 
-**Desktop:** install the `.ttf` files from `Farangis/fonts/ttf` and `Ghorbanali/fonts/ttf`.
+Single family: `Ghorbanali/ghorbanali.css` or `Farangis/farangis.css`.
 
-**Source:** every glyph is defined as code (centre-line skeletons in `src/letters.py`), turned into outlines and built with fontTools — see *Build from source* above.
+### Use anywhere else
+
+- **WordPress:** Customizer → Additional CSS → `@import url("https://cdn.jsdelivr.net/gh/rahimixyz/persian-fonts-farangis-ghorbanali@main/fonts.css");`
+- **PHP / Laravel / Symfony:** put the `<link>` in your layout's `<head>`, or copy the `Ghorbanali` folder to `public/fonts` and link `ghorbanali.css`.
+- **React / Next.js / Vue / Svelte:** `<link>` in `index.html` / root layout, or `next/font/local` with the `woff2` files.
+- **Python:** Pillow `ImageFont.truetype(path, size, layout_engine=ImageFont.Layout.RAQM)`; matplotlib `font_manager.fontManager.addfont(path)`.
+- **Android** `res/font/`, **iOS** `UIAppFonts`, **Flutter** `pubspec.yaml` `fonts:` — use the `ttf` files.
+- **Desktop / design apps** (Photoshop, Illustrator, Figma, Office, Canva): install the `otf` or `ttf` files.
+
+### Coverage
+
+Full Persian alphabet with contextual forms (isolated, initial, medial, final), lam-alef ligatures, Arabic-letter variants (ي ك ى ة), hamza forms, Persian/Arabic-Indic digits and Latin digits 0–9 at matching height, Persian and ASCII punctuation, harakat with mark positioning, ZWNJ and tatweel. Shaping uses standard OpenType features (`init`, `medi`, `fina`, `rlig`, `mark`, `mkmk`). Latin letters are not included — pair with a Latin font.
+
+### Build and test
+
+Every glyph is generated from code (`src/letters.py`, centre-line skeletons → outlines with Shapely → fontTools).
+
+```bash
+pip install -r requirements.txt
+python3 src/build.py .     # builds Farangis/fonts and Ghorbanali/fonts (ttf, otf, woff, woff2)
+python3 src/audit.py       # coverage, contextual forms vs Unicode joining types, join gaps, metrics, spacing
+python3 src/specimens.py   # specimen images
+```
+
+The audit runs on every push (`.github/workflows/fonts.yml`).
 
 Keywords: Persian font, Farsi font, free Persian font, Persian web font, Farsi webfont, Persian display font, Persian Kufi font, billboard font, signage font, Iranian font, RTL font, Arabic-script font, فونت فارسی، فونت رایگان فارسی، فونت وب فارسی، فونت تیتر، فونت بنر، فونت کوفی.
