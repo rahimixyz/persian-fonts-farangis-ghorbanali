@@ -22,7 +22,7 @@ class Style:
         self.lp = self.C + sw                # loop centre-line size
         self.tw = sw + 1.3 * self.G          # medial tooth width
         self.ts = sw + 0.95 * self.G         # tooth pitch (seen)
-        self.Ts = self.T * 0.72              # seen tooth height
+        self.Ts = self.T * 0.85              # seen tooth height
         self.P = sw + self.G                 # pitch of parallel strokes
 
 
@@ -104,16 +104,18 @@ def build_forms(S):
                 (x0 + yw, 0, 1.3), (x0 + yw, yb, 1.8), (x0, yb, 1.8), (x0, yb * 0.25)])
         return p
 
+    yfw = yw * 1.05  # final form: diagonal entry from the join, wide bowl, tail rising on the left
+
     def yeh_fina(p):
-        p.path([(0, yb * 0.25), (0, yb, 1.8), (yw * 0.82, yb, 1.8), (yw * 0.82, 0, 1.0), (yw + E, 0)])
+        p.path([(yfw + E, 0), (yfw * 0.72, 0, 0.9), (yfw * 0.4, yb, 1.2), (0, yb, 1.8), (0, yb * 0.05)])
         return p
 
     F['yeh'] = Form(yeh_isol(pen()))
-    F['yeh.fina'] = Form(yeh_fina(pen()), jr=True, W=yw)
+    F['yeh.fina'] = Form(yeh_fina(pen()), jr=True, W=yfw)
     tooth_forms('yeh', 2, 'below')
     # arabic yeh (with dots in all forms)
     F['yehar'] = Form(yeh_isol(pen()).dots(0.62 * yw, yb - hs - dg, 2, 'below'))
-    F['yehar.fina'] = Form(yeh_fina(pen()).dots(0.45 * yw, yb - hs - dg, 2, 'below'), jr=True, W=yw)
+    F['yehar.fina'] = Form(yeh_fina(pen()).dots(yfw * 0.45, yb - hs - dg, 2, 'below'), jr=True, W=yfw)
     F['yehar.init'] = F['yeh.init']
     F['yehar.medi'] = F['yeh.medi']
     # alef maksura
@@ -557,8 +559,8 @@ def build_forms(S):
     hamza_above(p, 0.45 * yw, H * 0.72 + capx + hs + dg * 0.5)
     F['yehhamza'] = Form(p)
     p = yeh_fina(pen())
-    hamza_above(p, 0.42 * yw, hs + dg)
-    F['yehhamza.fina'] = Form(p, jr=True, W=yw)
+    hamza_above(p, 0.3 * yfw, hs + dg)
+    F['yehhamza.fina'] = Form(p, jr=True, W=yfw)
     tooth_forms('yehhamza', 0, 'above', extra=lambda p, x, y: hamza_above(p, x, y + dg))
     # heh with yeh above (ۀ)
     F['hehyeh'] = heh('isol', hamza=hamza_above)
@@ -601,6 +603,28 @@ def build_forms(S):
                           closed=True, R=S.RL).path([(w * 0.92, Hn * 0.6), (w * 0.92, 0)])
     for i, p in digs.items():
         F['digit%d' % i] = Form(p, kind='digit', W=dwid)
+
+    # ------------------------------------------------------------------ Latin digits (same height as Persian)
+    lat = {}
+    rr = S.RL * 1.1
+    lat[0] = dpen().path([(w * 0.1, 0), (w * 0.9, 0), (w * 0.9, Hn), (w * 0.1, Hn)], closed=True, R=rr)
+    lat[1] = dpen().path([(w * 0.22, Hn * 0.78), (w * 0.58, Hn, 0.3), (w * 0.58, 0)], R=S.R * 0.4)
+    lat[2] = dpen().path([(w * 0.1, Hn * 0.7), (w * 0.1, Hn, 0.9), (w * 0.9, Hn, 0.9), (w * 0.9, Hn * 0.58, 0.9),
+                          (w * 0.1, 0, 0.2), (w * 0.92, 0)], R=rr)
+    lat[3] = dpen().path([(w * 0.1, Hn), (w * 0.88, Hn, 0.4), (w * 0.42, Hn * 0.56, 0.3), (w * 0.9, Hn * 0.5, 0.9),
+                          (w * 0.9, 0, 0.9), (w * 0.08, 0)], R=rr)
+    lat[4] = dpen().path([(w * 0.7, 0), (w * 0.7, Hn, 0.2), (w * 0.06, Hn * 0.3, 0.2), (w * 0.95, Hn * 0.3)], R=S.R * 0.4)
+    lat[5] = dpen().path([(w * 0.88, Hn), (w * 0.14, Hn, 0.3), (w * 0.12, Hn * 0.55, 0.3), (w * 0.9, Hn * 0.55, 0.9),
+                          (w * 0.9, 0, 0.9), (w * 0.08, 0)], R=rr)
+    lat[6] = dpen().path([(w * 0.82, Hn), (w * 0.1, Hn, 0.9), (w * 0.1, 0, 0.9), (w * 0.9, 0, 0.9),
+                          (w * 0.9, Hn * 0.56, 0.9), (w * 0.1, Hn * 0.56)], R=rr)
+    lat[7] = dpen().path([(w * 0.08, Hn), (w * 0.92, Hn, 0.2), (w * 0.38, 0)], R=S.R * 0.4)
+    lat[8] = dpen().path([(w * 0.16, Hn * 0.55), (w * 0.84, Hn * 0.55), (w * 0.84, Hn), (w * 0.16, Hn)], closed=True, R=rr) \
+        .path([(w * 0.08, 0), (w * 0.92, 0), (w * 0.92, Hn * 0.55), (w * 0.08, Hn * 0.55)], closed=True, R=rr)
+    lat[9] = dpen().path([(w * 0.18, 0), (w * 0.9, 0, 0.9), (w * 0.9, Hn, 0.9), (w * 0.1, Hn, 0.9),
+                          (w * 0.1, Hn * 0.44, 0.9), (w * 0.9, Hn * 0.44)], R=rr)
+    for i, p in lat.items():
+        F['digitlat%d' % i] = Form(p, kind='digit', W=dwid)
 
     # ------------------------------------------------------------------ punctuation
     dd = S.dot * 1.15
@@ -664,6 +688,37 @@ def build_forms(S):
     p = pen(); p.path([(dd * 0.3, -hs + dd * 1.4), (-dd * 0.3, -hs)], sw=dd * 0.6, cap='round'); F['decimalar'] = Form(p)
     F['quotedbl'] = Form(pen().path([(0, A), (0, A - H * 0.55)], sw=sw * 0.8).path([(G * 1.1, A), (G * 1.1, A - H * 0.55)], sw=sw * 0.8))
     F['quotesingle'] = Form(pen().path([(0, A), (0, A - H * 0.55)], sw=sw * 0.8))
+
+    bh_ = A + G * 0.3
+    F['bar'] = Form(pen().path([(0, D * 0.75), (0, bh_)], cap='flat'))
+    bw_ = G * 0.75
+    F['bracketleft'] = Form(pen().path([(bw_, bh_), (0, bh_, 0.2), (0, D * 0.75, 0.2), (bw_, D * 0.75)], R=S.R * 0.3))
+    F['bracketright'] = Form(pen().path([(0, bh_), (bw_, bh_, 0.2), (bw_, D * 0.75, 0.2), (0, D * 0.75)], R=S.R * 0.3))
+    F['underscore'] = Form(pen().path([(0, D * 0.55), (G * 3.2, D * 0.55)], cap='flat'))
+    ast = G * 0.85
+    p = pen()
+    for k in range(3):
+        import math as _m
+        a = _m.pi / 2 + k * _m.pi / 3
+        cx, cy = ast, A - ast
+        p.path([(cx - _m.cos(a) * ast, cy - _m.sin(a) * ast), (cx + _m.cos(a) * ast, cy + _m.sin(a) * ast)], sw=sw * 0.8)
+    F['asterisk'] = Form(p)
+    lg = G * 1.6
+    F['less'] = Form(pen().path([(lg, H * 0.55 + lg * 0.6), (0, H * 0.55, 0.2), (lg, H * 0.55 - lg * 0.6)], R=S.R * 0.3))
+    F['greater'] = Form(pen().path([(0, H * 0.55 + lg * 0.6), (lg, H * 0.55, 0.2), (0, H * 0.55 - lg * 0.6)], R=S.R * 0.3))
+    tw_ = G * 2.2
+    F['asciitilde'] = Form(pen().path([(0, H * 0.45), (tw_ * 0.3, H * 0.7, 0.8), (tw_ * 0.7, H * 0.4, 0.8), (tw_, H * 0.65)], R=S.R * 0.8))
+    F['backslash'] = Form(pen().path([(G * 2.2, D * 0.4), (0, A)], sw=sw * 0.85))
+    nw_ = G * 2.4
+    F['numbersign'] = Form(pen().path([(nw_ * 0.35, 0), (nw_ * 0.45, A * 0.9)], sw=sw * 0.8).path([(nw_ * 0.65, 0), (nw_ * 0.75, A * 0.9)], sw=sw * 0.8)
+                           .path([(0, A * 0.3), (nw_, A * 0.3)], sw=sw * 0.8, cap='flat').path([(nw_ * 0.08, A * 0.62), (nw_ * 1.05, A * 0.62)], sw=sw * 0.8, cap='flat'))
+    F['question'] = Form(pen().dot(qw_ / 2, dd / 2 - hs, size=dd)
+                         .path([(0, A * 0.72), (0, A, 1.2), (qw_, A, 1.2), (qw_, A * 0.55, 1.2),
+                                (qw_ / 2, A * 0.5, 0.8), (qw_ / 2, dd + G * 0.35)]))
+    F['bullet'] = Form(pen().dot(0, H * 0.5, size=dd * 1.3))
+    F['ellipsis'] = Form(pen().dot(0, dd / 2 - hs, size=dd).dot(dd * 1.9, dd / 2 - hs, size=dd).dot(dd * 3.8, dd / 2 - hs, size=dd))
+    mx = G * 1.1
+    F['multiply'] = Form(pen().path([(0, H * 0.55 - mx), (2 * mx, H * 0.55 + mx)], cap='flat').path([(0, H * 0.55 + mx), (2 * mx, H * 0.55 - mx)], cap='flat'))
 
     # ------------------------------------------------------------------ marks (zero width, centred on x=0)
     fw = G * 0.9 + msw

@@ -13,7 +13,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 from letters import Style, build_forms  # noqa: E402
 from geom import to_polys  # noqa: E402
 
-VERSION = '1.000'
+VERSION = '1.100'
 AUTHOR = 'Alireza Rahimi'
 AUTHOR_FA = 'علیرضا رحیمی'
 YEAR = 2026
@@ -27,22 +27,22 @@ def style(name, **kw):
 STYLES = {
     # ---- Ghorbanali: calm, rounded, open text face for websites
     'Ghorbanali-Regular': style('Ghorbanali-Regular', family='Ghorbanali', family_fa='قربانعلی', sub='Regular',
-                                weight=400, sw=80, G=104, A=640, Ak=590, T=210, D=-290, H=330, C=150,
+                                weight=400, sw=80, G=148, A=660, Ak=650, T=330, D=-300, H=470, C=205,
                                 R=110, RL=150, cap='round', join='round', dot=104, dotshape='diamond', dg=56,
-                                sb=50, kafstyle='curve', Hn=520, dw=300, space=240),
+                                sb=32, kafstyle='curve', Hn=600, dw=330, space=250),
     'Ghorbanali-Bold': style('Ghorbanali-Bold', family='Ghorbanali', family_fa='قربانعلی', sub='Bold',
-                             weight=700, sw=124, G=112, A=650, Ak=600, T=225, D=-290, H=340, C=150,
+                             weight=700, sw=124, G=156, A=670, Ak=660, T=345, D=-300, H=480, C=205,
                              R=110, RL=150, cap='round', join='round', dot=140, dotshape='diamond', dg=56,
-                             sb=46, kafstyle='curve', Hn=530, dw=330, space=240),
+                             sb=30, kafstyle='curve', Hn=610, dw=360, space=250),
     # ---- Farangis: heavy geometric display face for posters and billboards
     'Farangis-Bold': style('Farangis-Bold', family='Farangis', family_fa='فرنگیس', sub='Bold',
-                           weight=700, sw=130, G=118, A=620, Ak=640, T=245, D=-270, H=340, C=150,
+                           weight=700, sw=130, G=156, A=660, Ak=680, T=345, D=-280, H=460, C=200,
                            R=14, RL=36, cap='flat', join='mitre', dot=140, dotshape='square', dg=50,
-                           sb=44, kafstyle='kufi', Hn=540, dw=350, space=230),
+                           sb=30, kafstyle='kufi', Hn=600, dw=380, space=240),
     'Farangis-Black': style('Farangis-Black', family='Farangis', family_fa='فرنگیس', sub='Black',
-                            weight=900, sw=176, G=134, A=640, Ak=665, T=270, D=-270, H=360, C=150,
+                            weight=900, sw=176, G=172, A=675, Ak=700, T=365, D=-280, H=480, C=200,
                             R=16, RL=40, cap='flat', join='mitre', dot=180, dotshape='square', dg=54,
-                            sb=46, kafstyle='kufi', Hn=560, dw=400, space=230),
+                            sb=32, kafstyle='kufi', Hn=620, dw=430, space=240),
 }
 
 CMAP = {
@@ -65,6 +65,10 @@ CMAP = {
 }
 for i in range(10):
     CMAP['digit%d' % i] = [0x6F0 + i, 0x660 + i]
+    CMAP['digitlat%d' % i] = [0x30 + i]
+CMAP.update({'bar': [0x7C], 'bracketleft': [0x5B], 'bracketright': [0x5D], 'underscore': [0x5F], 'asterisk': [0x2A],
+             'less': [0x3C], 'greater': [0x3E], 'asciitilde': [0x7E], 'backslash': [0x5C], 'numbersign': [0x23],
+             'question': [0x3F], 'bullet': [0x2022], 'ellipsis': [0x2026], 'multiply': [0xD7]})
 
 TOP_MARKS = ['fatha', 'fathatan', 'damma', 'dammatan', 'shadda', 'sukun', 'superalef', 'hamzaabove']
 BOT_MARKS = ['kasra', 'kasratan', 'hamzabelow']
@@ -278,6 +282,38 @@ def autohint(ttf):
     os.replace(ttf + '.tmp', ttf)
 
 
+def make_otf(ttf, outdir):
+    """CFF-flavoured OpenType (.otf) from the unhinted TTF: same outlines, metrics and features."""
+    from fontTools.pens.t2CharStringPen import T2CharStringPen
+    from fontTools.pens.reverseContourPen import ReverseContourPen
+    src = TTFont(ttf)
+    order = src.getGlyphOrder()
+    gs = src.getGlyphSet()
+    hmtx = src['hmtx'].metrics
+    charstrings = {}
+    for g in order:
+        pen = T2CharStringPen(hmtx[g][0], gs)
+        gs[g].draw(ReverseContourPen(pen))  # CFF wants counter-clockwise outer contours
+        charstrings[g] = pen.getCharString()
+    names = src['name']
+    ps = names.getDebugName(6)
+    fb = FontBuilder(src['head'].unitsPerEm, isTTF=False)
+    fb.setupGlyphOrder(order)
+    fb.setupCharacterMap(src.getBestCmap())
+    fb.setupCFF(ps, {'FullName': names.getDebugName(4), 'FamilyName': names.getDebugName(1),
+                     'Weight': names.getDebugName(2), 'version': VERSION,
+                     'Notice': names.getDebugName(0)}, charstrings, {})
+    fb.setupHorizontalMetrics(dict(hmtx))
+    for t in ('hhea', 'OS/2', 'name', 'head', 'GDEF', 'GSUB', 'GPOS'):
+        if t in src:
+            fb.font[t] = src[t]
+    fb.setupPost()
+    fb.setupMaxp()
+    d = os.path.join(outdir, 'otf')
+    os.makedirs(d, exist_ok=True)
+    fb.font.save(os.path.join(d, os.path.basename(ttf).replace('.ttf', '.otf')))
+
+
 def webfonts(ttf, outdir):
     for flavor in ('woff2', 'woff'):
         f = TTFont(ttf)
@@ -294,6 +330,7 @@ if __name__ == '__main__':
         fam = STYLES[k].family
         od = os.path.join(root, fam, 'fonts')
         t = build(k, od)
+        make_otf(t, od)
         autohint(t)
         webfonts(t, od)
         print('built', t)
