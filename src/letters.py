@@ -121,8 +121,7 @@ def build_forms(S):
     # alef maksura
     F['alefmaksura'] = F['yeh']
     F['alefmaksura.fina'] = F['yeh.fina']
-    F['alefmaksura.init'] = F['yeh.init']
-    F['alefmaksura.medi'] = F['yeh.medi']
+    tooth_forms('alefmaksura', 0, 'below')  # Arabic alef maksura: dotless in every form
 
     # ------------------------------------------------------------------ jeem family
     jw = 2.5 * G + sw * 1.2
@@ -742,7 +741,7 @@ def build_forms(S):
         p.path([(x + dl * 0.9, msw + dl * 0.6), (x + dl * 0.9, msw * 0.5, 1), (x - dl * 0.5, 0)], sw=msw, R=S.R * 0.5)
 
     F['damma'] = mk(lambda p: damma(p, -dl * 0.25))
-    F['dammatan'] = mk(lambda p: (damma(p, -dl * 1.1), damma(p, dl * 0.75)))
+    F['dammatan'] = mk(lambda p: (damma(p, -dl * 0.8), damma(p, dl * 0.3)))
     F['sukun'] = mk(lambda p: p.path([(-dl * 0.45, 0), (dl * 0.45, 0), (dl * 0.45, dl * 0.9), (-dl * 0.45, dl * 0.9)],
                                     closed=True, sw=msw * 0.9, R=S.RL * 0.5))
     shw = G * 1.5 + msw

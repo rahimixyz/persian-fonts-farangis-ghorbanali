@@ -8,6 +8,7 @@ Checks, for every font:
   4. vertical metrics: nothing clipped by hhea/OS2 win metrics, sensible line height
   5. visual size: height of the Persian body compared with the em
   6. spacing: gap between non-joining letters, compared with stroke width
+  7. diacritics: stacked marks (shadda + fatha, kasra under dots ...) must not overlap each other
 Exit code 1 when any hard check fails.
 """
 import glob
@@ -153,6 +154,32 @@ def audit(path):
     info.append(f'"آرام": advance {total / upm:.2f} em, white space {(total - ink) / upm:.2f} em')
     if (total - ink) / upm > 0.45:
         warnings.append(f'loose spacing between non-joining letters ("آرام" has {(total - ink) / upm:.2f} em of side space)')
+
+    # 7. diacritics: ink of each mark must not collide with other marks of the same word
+    from shapely.geometry import box as sbox
+    def ink_boxes(text):
+        infos, pos = shape(path, text)
+        x = 0
+        out = []
+        for i, p in zip(infos, pos):
+            g = order[i.codepoint]
+            pen = BoundsPen(gs)
+            gs[g].draw(pen)
+            if pen.bounds:
+                a, b, c, d = pen.bounds
+                ox, oy = x + p.x_offset, p.y_offset
+                out.append((g, sbox(a + ox, b + oy, c + ox, d + oy)))
+            x += p.x_advance
+        return out
+    marks = set(['fatha', 'kasra', 'damma', 'fathatan', 'dammatan', 'kasratan', 'shadda', 'sukun',
+                 'superalef', 'hamzaabove', 'hamzabelow'])
+    for word in ['مُحَمَّدٌ', 'بِسْمِ', 'شَدَّةً', 'إِنَّ', 'رَبِّي', 'كِتَابٌ', 'سُؤَال', 'عَلِيٌّ', 'قُرْآن', 'تَشَکُّر']:
+        bx = ink_boxes(word)
+        mk = [(g, b) for g, b in bx if g in marks]
+        for i in range(len(mk)):
+            for j in range(i + 1, len(mk)):
+                if mk[i][1].intersection(mk[j][1]).area > 0:
+                    errors.append(f'marks collide in "{word}": {mk[i][0]} and {mk[j][0]}')
 
     print(f'\n== {name}: {len(errors)} errors, {len(warnings)} warnings')
     for e in errors[:40]:

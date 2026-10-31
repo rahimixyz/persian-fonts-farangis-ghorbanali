@@ -13,7 +13,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 from letters import Style, build_forms  # noqa: E402
 from geom import to_polys  # noqa: E402
 
-VERSION = '1.100'
+VERSION = '1.200'
 AUTHOR = 'Alireza Rahimi'
 AUTHOR_FA = 'علیرضا رحیمی'
 YEAR = 2026
@@ -24,26 +24,56 @@ def style(name, **kw):
     return Style(name=name, **kw)
 
 
-STYLES = {
+_MASTERS = {
     # ---- Ghorbanali: calm, rounded, open text face for websites
-    'Ghorbanali-Regular': style('Ghorbanali-Regular', family='Ghorbanali', family_fa='قربانعلی', sub='Regular',
-                                weight=400, sw=80, G=148, A=660, Ak=650, T=330, D=-300, H=470, C=205,
-                                R=110, RL=150, cap='round', join='round', dot=104, dotshape='diamond', dg=56,
-                                sb=32, kafstyle='curve', Hn=600, dw=330, space=250),
-    'Ghorbanali-Bold': style('Ghorbanali-Bold', family='Ghorbanali', family_fa='قربانعلی', sub='Bold',
-                             weight=700, sw=124, G=156, A=670, Ak=660, T=345, D=-300, H=480, C=205,
-                             R=110, RL=150, cap='round', join='round', dot=140, dotshape='diamond', dg=56,
-                             sb=30, kafstyle='curve', Hn=610, dw=360, space=250),
+    'Ghorbanali-Regular': dict(family='Ghorbanali', family_fa='قربانعلی', sub='Regular',
+                               weight=400, sw=80, G=148, A=660, Ak=650, T=330, D=-300, H=470, C=205,
+                               R=110, RL=150, cap='round', join='round', dot=104, dotshape='diamond', dg=56,
+                               sb=32, kafstyle='curve', Hn=600, dw=330, space=250),
+    'Ghorbanali-Bold': dict(family='Ghorbanali', family_fa='قربانعلی', sub='Bold',
+                            weight=700, sw=124, G=156, A=670, Ak=660, T=345, D=-300, H=480, C=205,
+                            R=110, RL=150, cap='round', join='round', dot=140, dotshape='diamond', dg=56,
+                            sb=30, kafstyle='curve', Hn=610, dw=360, space=250),
     # ---- Farangis: heavy geometric display face for posters and billboards
-    'Farangis-Bold': style('Farangis-Bold', family='Farangis', family_fa='فرنگیس', sub='Bold',
-                           weight=700, sw=130, G=156, A=660, Ak=680, T=345, D=-280, H=460, C=200,
-                           R=14, RL=36, cap='flat', join='mitre', dot=140, dotshape='square', dg=50,
-                           sb=30, kafstyle='kufi', Hn=600, dw=380, space=240),
-    'Farangis-Black': style('Farangis-Black', family='Farangis', family_fa='فرنگیس', sub='Black',
-                            weight=900, sw=176, G=172, A=675, Ak=700, T=365, D=-280, H=480, C=200,
-                            R=16, RL=40, cap='flat', join='mitre', dot=180, dotshape='square', dg=54,
-                            sb=32, kafstyle='kufi', Hn=620, dw=430, space=240),
+    'Farangis-Bold': dict(family='Farangis', family_fa='فرنگیس', sub='Bold',
+                          weight=700, sw=130, G=156, A=660, Ak=680, T=345, D=-280, H=460, C=200,
+                          R=14, RL=36, cap='flat', join='mitre', dot=140, dotshape='square', dg=50,
+                          sb=30, kafstyle='kufi', Hn=600, dw=380, space=240),
+    'Farangis-Black': dict(family='Farangis', family_fa='فرنگیس', sub='Black',
+                           weight=900, sw=176, G=172, A=675, Ak=700, T=365, D=-280, H=480, C=200,
+                           R=16, RL=40, cap='flat', join='mitre', dot=180, dotshape='square', dg=54,
+                           sb=32, kafstyle='kufi', Hn=620, dw=430, space=240),
 }
+
+SUB_NAMES = {300: 'Light', 400: 'Regular', 500: 'Medium', 600: 'SemiBold', 700: 'Bold', 800: 'ExtraBold',
+             900: 'Black'}
+SUB_FA = {'Light': 'نازک', 'Regular': '', 'Medium': 'متوسط', 'SemiBold': 'نیم‌ضخیم', 'Bold': 'ضخیم',
+          'ExtraBold': 'خیلی ضخیم', 'Black': 'سیاه'}
+
+
+def _interp(a, b, weight):
+    """Weights between (and slightly beyond) two drawn masters: numeric parameters move linearly."""
+    t = (weight - a['weight']) / (b['weight'] - a['weight'])
+    out = {}
+    for k, v in a.items():
+        if isinstance(v, (int, float)) and k != 'weight':
+            out[k] = round(v + (b[k] - v) * t, 1)
+        else:
+            out[k] = v
+    out['weight'] = weight
+    out['sub'] = SUB_NAMES[weight]
+    return out
+
+
+STYLES = {}
+for _fam, (_a, _b), _weights in [('Ghorbanali', ('Ghorbanali-Regular', 'Ghorbanali-Bold'), (300, 400, 500, 600, 700, 800)),
+                                 ('Farangis', ('Farangis-Bold', 'Farangis-Black'), (500, 600, 700, 800, 900))]:
+    for _w in _weights:
+        _p = _interp(_MASTERS[_a], _MASTERS[_b], _w)
+        _key = '%s-%s' % (_fam, _p['sub'])
+        if _key in _MASTERS:
+            _p = dict(_MASTERS[_key])
+        STYLES[_key] = style(_key, **_p)
 
 CMAP = {
     'alef': [0x627], 'alefmadda': [0x622], 'alefhamza': [0x623], 'alefhamzabelow': [0x625], 'hamza': [0x621],
@@ -183,6 +213,52 @@ def mark_code(G, S):
     return '\n'.join(lines)
 
 
+ARABIC_LETTERS = {n for n, cps in CMAP.items() if any(0x620 <= c <= 0x6D3 for c in cps)
+                  and not n.startswith('digit') and n not in TOP_MARKS + BOT_MARKS + ['tatweel', 'commaar', 'semicolonar',
+                                                                                  'questionar', 'percentar',
+                                                                                  'thousandsar', 'decimalar']}
+
+
+def kern_code(G, S):
+    """Optical kerning between letters that meet without joining (e.g. "را", "دو", "زن").
+
+    Persian is spaced mostly by side bearings, but shapes such as the open side of reh, waw or
+    final noon leave holes or crowd the next letter. For every pair "glyph that does not join
+    forward" + "glyph that does not join back" the closest distance between the two outlines is
+    measured and pulled towards the distance of the reference pair alef + alef.
+    Text order is right-to-left: the first glyph sits on the right, the second to its left."""
+    from shapely import affinity as aff
+    firsts = [n for n in G if n.split('.')[0] in ARABIC_LETTERS | set(LIGS)
+              and (('.' not in n) or n.endswith('.fina'))]
+    seconds = [n for n in G if n.split('.')[0] in ARABIC_LETTERS | set(LIGS)
+               and (('.' not in n) or n.endswith('.init'))]
+
+    def dist(a, b):
+        ga, _, _ = G[a]
+        gb, advb, _ = G[b]
+        return ga.distance(aff.translate(gb, -advb, 0))
+
+    target = dist('alef', 'alef')
+    lo, hi = target * 0.7, target * 1.6
+    pairs = []
+    for a in firsts:
+        for b in seconds:
+            d = dist(a, b)
+            if d > hi:
+                v = -min(d - hi * 0.85, S.sw * 0.45)   # pull wide gaps in, but never by much
+            elif d < lo:
+                v = min(lo - d, S.sw * 0.6)            # push crowded pairs apart
+            else:
+                continue
+            v = int(round(v / 5) * 5)
+            if abs(v) >= 10:
+                pairs.append((a, b, v))
+    lines = ['feature kern {', '  lookupflag IgnoreMarks;']
+    lines += ['  pos %s %s %d;' % p for p in pairs]
+    lines.append('} kern;')
+    return '\n'.join(lines), len(pairs)
+
+
 def build(key, outdir):
     S = STYLES[key]
     F = build_forms(S)
@@ -218,7 +294,7 @@ def build(key, outdir):
     desc = round(ymin - 60)
     fb.setupHorizontalHeader(ascent=asc, descent=desc, lineGap=0)
     fam, sub = S.family, S.sub
-    ribbi = sub in ('Regular', 'Bold')
+    ribbi = sub in ('Regular', 'Bold')  # Farangis has no Regular, so its Bold is the family's RIBBI style
     psname = '%s-%s' % (fam, sub)
     full = '%s %s' % (fam, sub) if sub != 'Regular' else fam
     copyright_ = 'Copyright %d %s. Licensed under the SIL Open Font License, Version 1.1.' % (YEAR, AUTHOR)
@@ -243,7 +319,7 @@ def build(key, outdir):
     fb.setupNameTable(names, mac=False)
     # Persian names (Windows, fa-IR = 0x0429)
     nt = fb.font['name']
-    fa_full = S.family_fa if sub == 'Regular' else '%s %s' % (S.family_fa, {'Bold': 'ضخیم', 'Black': 'سیاه'}[sub])
+    fa_full = S.family_fa if sub == 'Regular' else '%s %s' % (S.family_fa, SUB_FA[sub])
     nt.setName(S.family_fa if ribbi else fa_full, 1, 3, 1, 0x0429)
     nt.setName(fa_full, 4, 3, 1, 0x0429)
     nt.setName(AUTHOR_FA, 9, 3, 1, 0x0429)
@@ -256,19 +332,19 @@ def build(key, outdir):
                 sxHeight=round(S.H), sCapHeight=round(S.A), fsType=0,
                 ulCodePageRange1=(1 << 0) | (1 << 6))
     fb.setupPost()
-    fb.setupHead(unitsPerEm=1000, fontRevision=float(VERSION), macStyle=(1 if sub in ('Bold', 'Black') else 0))
-    if sub == 'Black':
-        fb.font['head'].macStyle = 1
+    fb.setupHead(unitsPerEm=1000, fontRevision=float(VERSION), macStyle=(1 if sub == 'Bold' else 0))
     from fontTools.misc.timeTools import timestampNow
     fb.font['head'].created = fb.font['head'].modified = timestampNow()
     fb.font['OS/2'].recalcUnicodeRanges(fb.font)
     names_set = set(G.keys())
-    fea = feature_code(names_set) + '\n' + mark_code(G, S)
+    kern, nkern = kern_code(G, S)
+    fea = feature_code(names_set) + '\n' + mark_code(G, S) + '\n' + kern
     addOpenTypeFeaturesFromString(fb.font, fea)
     os.makedirs(outdir, exist_ok=True)
     ttf = os.path.join(outdir, 'ttf', psname + '.ttf')
     os.makedirs(os.path.dirname(ttf), exist_ok=True)
     fb.font.save(ttf)
+    print('  %s: %d kerning pairs' % (psname, nkern))
     return ttf
 
 
@@ -323,13 +399,40 @@ def webfonts(ttf, outdir):
         f.save(os.path.join(d, os.path.basename(ttf).replace('.ttf', '.' + flavor)))
 
 
+LINE_REF = {'Ghorbanali': 'Ghorbanali-Regular', 'Farangis': 'Farangis-Bold'}
+
+
+def unify_metrics(ttfs):
+    """Same line spacing in every weight of a family (switching weight must not move lines):
+    typo/hhea metrics come from the family's reference weight, win metrics cover the tallest
+    glyph of any weight so nothing is clipped on Windows."""
+    fonts = {os.path.basename(t)[:-4]: TTFont(t) for t in ttfs}
+    by_fam = {}
+    for k, f in fonts.items():
+        by_fam.setdefault(STYLES[k].family, []).append(k)
+    for fam, keys in by_fam.items():
+        ref = fonts.get(LINE_REF[fam]) or fonts[keys[0]]
+        asc, desc = ref['OS/2'].sTypoAscender, ref['OS/2'].sTypoDescender
+        wa = max(fonts[k]['OS/2'].usWinAscent for k in keys)
+        wd = max(fonts[k]['OS/2'].usWinDescent for k in keys)
+        for k in keys:
+            f = fonts[k]
+            f['OS/2'].sTypoAscender, f['OS/2'].sTypoDescender = asc, desc
+            f['hhea'].ascent, f['hhea'].descent = asc, desc
+            f['OS/2'].usWinAscent, f['OS/2'].usWinDescent = wa, wd
+    for t in ttfs:
+        fonts[os.path.basename(t)[:-4]].save(t)
+
+
 if __name__ == '__main__':
     root = sys.argv[1] if len(sys.argv) > 1 else 'out'
     keys = sys.argv[2:] or list(STYLES)
+    built = []
     for k in keys:
-        fam = STYLES[k].family
-        od = os.path.join(root, fam, 'fonts')
-        t = build(k, od)
+        od = os.path.join(root, STYLES[k].family, 'fonts')
+        built.append((build(k, od), od))
+    unify_metrics([t for t, _ in built])
+    for t, od in built:
         make_otf(t, od)
         autohint(t)
         webfonts(t, od)
