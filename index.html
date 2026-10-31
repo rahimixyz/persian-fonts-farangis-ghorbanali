@@ -6,54 +6,103 @@
 <title>فرنگیس و قربانعلی</title>
 <link rel="stylesheet" href="Farangis/farangis.css">
 <link rel="stylesheet" href="Ghorbanali/ghorbanali.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap">
 <style>
-  :root { --bg: #faf8f3; --fg: #1e1e1e; --muted: #6b6b6b; --line: #e3dfd6; --accent: #15593c; }
+  :root { --bg: #faf8f3; --fg: #1e1e1e; --muted: #6b6b6b; --line: #e3dfd6; --card: #fff; --accent: #15593c; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #161616; --fg: #eeeae2; --muted: #a09b92; --line: #333; --card: #1f1f1f; --accent: #6fcf9f; }
+  }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--fg); font-family: "Ghorbanali", Tahoma, sans-serif; line-height: 1.9; }
-  main { max-width: 960px; margin: 0 auto; padding: 32px 16px 64px; }
-  header h1 { font-family: "Farangis"; font-weight: 900; font-size: clamp(48px, 10vw, 96px); line-height: 1.3; margin: 0; }
-  header p { color: var(--muted); font-size: 20px; margin: 0 0 24px; }
-  .try { width: 100%; font: inherit; font-size: 18px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
-  section { border-top: 1px solid var(--line); margin-top: 40px; padding-top: 24px; }
+  main { max-width: 1040px; margin: 0 auto; padding: 32px 16px 64px; }
+  header h1 { font-family: "Farangis"; font-weight: 900; font-size: clamp(44px, 9vw, 92px); line-height: 1.3; margin: 0; }
+  header p { color: var(--muted); font-size: 20px; margin: 0 0 8px; }
+  section { border-top: 1px solid var(--line); margin-top: 36px; padding-top: 20px; }
   h2 { font-weight: 700; font-size: 22px; margin: 0 0 4px; }
-  .meta { color: var(--muted); font-size: 15px; margin-bottom: 16px; }
-  .banner { background: var(--accent); color: #fff; border-radius: 10px; padding: 24px; font-family: "Farangis"; font-weight: 900;
-            font-size: clamp(40px, 9vw, 88px); line-height: 1.5; outline: 4px solid #fff; outline-offset: -14px; }
-  .f-bold { font-family: "Farangis"; font-weight: 700; font-size: clamp(28px, 5vw, 48px); line-height: 1.6; }
-  .g-sizes p { margin: 6px 0; }
-  .chars { font-size: 34px; letter-spacing: 0; line-height: 1.8; word-spacing: 6px; }
+  .meta { color: var(--muted); font-size: 15px; margin-bottom: 14px; }
   a { color: var(--accent); }
+
+  .controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px 20px;
+              background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+  .controls label { display: flex; flex-direction: column; font-size: 14px; color: var(--muted); gap: 4px; }
+  .controls output { color: var(--fg); font-weight: 700; }
+  .controls select, .controls input[type=text], textarea { font: inherit; font-size: 16px; padding: 6px 8px; border: 1px solid var(--line);
+              border-radius: 6px; background: var(--bg); color: var(--fg); }
+  input[type=range] { width: 100%; accent-color: var(--accent); }
+  textarea { width: 100%; min-height: 70px; margin-top: 12px; resize: vertical; }
+
+  .stage { display: grid; gap: 16px; margin-top: 16px; }
+  .stage.compare { grid-template-columns: 1fr 1fr; }
+  @media (max-width: 720px) { .stage.compare { grid-template-columns: 1fr; } }
+  .pane { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; overflow-wrap: anywhere; }
+  .pane .tag { font: 13px/1.4 "Ghorbanali", Tahoma, sans-serif; color: var(--muted); margin-bottom: 6px; }
+  .pane h3 { margin: 0 0 .3em; line-height: 1.5; }
+  .pane p { margin: 0 0 .6em; }
+
+  .weights div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.7; }
+  .weights small { font: 12px monospace; color: var(--muted); display: inline-block; width: 120px; direction: ltr; }
+  .chars { font-size: 32px; line-height: 1.8; word-spacing: 8px; }
 </style>
 </head>
 <body>
 <main>
   <header>
     <h1>فرنگیس و قربانعلی</h1>
-    <p>دو فونت فارسی رایگان از علیرضا رحیمی</p>
-    <input class="try" id="try" placeholder="متن دلخواه خود را اینجا بنویسید…" aria-label="متن آزمایشی">
+    <p>زیبایی در تیتر، خوانایی در متن — دو خانوادهٔ فونت فارسی رایگان از علیرضا رحیمی</p>
   </header>
 
   <section>
-    <h2>فرنگیس</h2>
-    <div class="meta">برای بنر، بیلبورد و تابلو · ضخیم و سیاه</div>
-    <div class="banner" data-sample>خروجی شهرک غرب ۲ کیلومتر</div>
-    <p class="f-bold" data-sample>جشنواره بزرگ پاییزه — تخفیف ویژه ۵۰٪</p>
-    <p class="chars" style="font-family:Farangis;font-weight:900">ا ب پ ت ث ج چ ح خ د ذ ر ز ژ س ش ص ض ط ظ ع غ ف ق ک گ ل م ن و ه ی ۰۱۲۳۴۵۶۷۸۹</p>
-  </section>
-
-  <section class="g-sizes">
-    <h2>قربانعلی</h2>
-    <div class="meta">برای متن وب‌سایت · معمولی و ضخیم</div>
-    <p style="font-size:15px" data-sample>زبان فارسی یکی از زبان‌های کهن جهان است که امروز در ایران، افغانستان و تاجیکستان به آن سخن می‌گویند.</p>
-    <p style="font-size:18px" data-sample>زبان فارسی یکی از زبان‌های کهن جهان است که امروز در ایران، افغانستان و تاجیکستان به آن سخن می‌گویند.</p>
-    <p style="font-size:24px" data-sample>زبان فارسی یکی از زبان‌های کهن جهان است که امروز در ایران، افغانستان و تاجیکستان به آن سخن می‌گویند.</p>
-    <p style="font-size:24px;font-weight:700" data-sample>قیمت: ۱۲۵٬۰۰۰ تومان — «پیشنهاد ویژه» برای خرید آنلاین</p>
-    <p class="chars">ا ب پ ت ث ج چ ح خ د ذ ر ز ژ س ش ص ض ط ظ ع غ ف ق ک گ ل م ن و ه ی ۰۱۲۳۴۵۶۷۸۹</p>
+    <h2>آزمایش زنده</h2>
+    <div class="meta">وزن، اندازه و فاصله‌ها را تغییر دهید؛ با «مقایسه» همان متن کنار وزیرمتن نمایش داده می‌شود.</div>
+    <div class="controls">
+      <label>فونت
+        <select id="family">
+          <option value="Ghorbanali">قربانعلی (متن)</option>
+          <option value="Farangis">فرنگیس (تیتر)</option>
+        </select>
+      </label>
+      <label>وزن: <output id="wOut"></output>
+        <input type="range" id="weight" step="100">
+      </label>
+      <label>اندازه: <output id="sOut"></output>
+        <input type="range" id="size" min="12" max="120" value="18">
+      </label>
+      <label>فاصلهٔ خطوط: <output id="lOut"></output>
+        <input type="range" id="lh" min="1.2" max="2.6" step="0.1" value="1.9">
+      </label>
+      <label>فاصلهٔ کلمات: <output id="wsOut"></output>
+        <input type="range" id="ws" min="-0.1" max="0.4" step="0.02" value="0">
+      </label>
+      <label>مقایسه با
+        <select id="cmp">
+          <option value="">بدون مقایسه</option>
+          <option value="Vazirmatn">وزیرمتن</option>
+          <option value="Tahoma">تاهوما (فونت سیستم)</option>
+        </select>
+      </label>
+    </div>
+    <textarea id="txt" aria-label="متن آزمایشی"></textarea>
+    <div class="stage" id="stage">
+      <div class="pane" id="mine"><div class="tag" id="mineTag"></div><div class="body"></div></div>
+      <div class="pane" id="other" hidden><div class="tag" id="otherTag"></div><div class="body"></div></div>
+    </div>
   </section>
 
   <section>
-    <h2>آزمون نمایش</h2>
-    <div class="meta">جمله‌های آزمون در اندازه‌های واقعی وب: ۱۲، ۱۴، ۱۶ و ۱۸ پیکسل</div>
+    <h2>همهٔ وزن‌ها</h2>
+    <div class="meta">قربانعلی: ۳۰۰ تا ۸۰۰ · فرنگیس: ۵۰۰ تا ۹۰۰</div>
+    <div class="weights" id="weights"></div>
+  </section>
+
+  <section>
+    <h2>نویسه‌ها</h2>
+    <div class="meta">حروف، ارقام و علائم پشتیبانی‌شده</div>
+    <p class="chars" id="chars"></p>
+  </section>
+
+  <section>
+    <h2>آزمون نمایش در اندازه‌های واقعی وب</h2>
+    <div class="meta">۱۲، ۱۴، ۱۶ و ۱۸ پیکسل</div>
     <div id="tests"></div>
   </section>
 
@@ -62,34 +111,103 @@
   </section>
 </main>
 <script>
+  const WEIGHTS = { Ghorbanali: [300, 400, 500, 600, 700, 800], Farangis: [500, 600, 700, 800, 900] };
+  const NAMES = { 300: 'نازک', 400: 'معمولی', 500: 'متوسط', 600: 'نیم‌ضخیم', 700: 'ضخیم', 800: 'خیلی ضخیم', 900: 'سیاه' };
+  const DEFAULT_TEXT = {
+    Ghorbanali: '# توسعه فناوری و آینده اقتصاد دیجیتال\nدر دنیای امروز، طراحی مناسب و خوانایی محتوا نقش مهمی در تجربهٔ کاربران دارد. فونت خوب باید در تمام اندازه‌ها زیبا، واضح و استاندارد باشد.\n۱۴۰۵/۰۸/۰۹ — ۱۲۳٬۴۵۶ تومان — ۹۸۷۶۵۴۳۲۱۰ — 2026-10-31',
+    Farangis: '# جشنواره بزرگ پاییزه\nتخفیف ویژه ۵۰٪ تا پایان آبان ۱۴۰۵\nخروجی شهرک غرب ۲ کیلومتر',
+  };
+  const $ = id => document.getElementById(id);
+  const fam = $('family'), w = $('weight'), size = $('size'), lh = $('lh'), ws = $('ws'), cmp = $('cmp'), txt = $('txt');
+  let edited = false;
+
+  function setupWeight() {
+    const list = WEIGHTS[fam.value];
+    const keep = +w.value;
+    w.min = list[0]; w.max = list[list.length - 1];
+    w.value = list.includes(keep) ? keep : (fam.value === 'Farangis' ? 900 : 400);
+    if (!edited) txt.value = DEFAULT_TEXT[fam.value];
+    if (fam.value === 'Farangis' && +size.value < 32) size.value = 56;
+    if (fam.value === 'Ghorbanali' && +size.value > 40) size.value = 18;
+  }
+
+  function fill(pane, family, weight) {
+    const body = pane.querySelector('.body');
+    body.textContent = '';
+    for (const line of txt.value.split('\n')) {
+      if (!line.trim()) continue;
+      const head = line.startsWith('# ');
+      const el = document.createElement(head ? 'h3' : 'p');
+      el.textContent = head ? line.slice(2) : line;
+      if (head) el.style.fontSize = '1.5em';
+      body.appendChild(el);
+    }
+    body.style.cssText = `font-family:"${family}",Tahoma,sans-serif;font-weight:${weight};font-size:${size.value}px;` +
+                         `line-height:${lh.value};word-spacing:${ws.value}em`;
+  }
+
+  function render() {
+    $('wOut').textContent = w.value + ' · ' + NAMES[w.value];
+    $('sOut').textContent = size.value + ' پیکسل';
+    $('lOut').textContent = lh.value;
+    $('wsOut').textContent = ws.value + 'em';
+    $('mineTag').textContent = (fam.value === 'Farangis' ? 'فرنگیس ' : 'قربانعلی ') + w.value;
+    fill($('mine'), fam.value, w.value);
+    const other = $('other');
+    other.hidden = !cmp.value;
+    $('stage').classList.toggle('compare', !!cmp.value);
+    if (cmp.value) {
+      $('otherTag').textContent = cmp.selectedOptions[0].textContent + ' ' + w.value;
+      fill(other, cmp.value, w.value);
+    }
+  }
+
+  fam.addEventListener('change', () => { setupWeight(); render(); });
+  txt.addEventListener('input', () => { edited = true; render(); });
+  for (const el of [w, size, lh, ws, cmp]) el.addEventListener('input', render);
+  setupWeight(); render();
+
+  // all weights
+  const sample = 'زیبایی در تیتر، خوانایی در متن ۱۲۳۴۵';
+  for (const [family, list] of Object.entries(WEIGHTS)) {
+    for (const weight of list) {
+      const d = document.createElement('div');
+      d.innerHTML = `<small>${family} ${weight}</small> `;
+      const s = document.createElement('span');
+      s.textContent = sample;
+      s.style.cssText = `font-family:${family};font-weight:${weight};font-size:${family === 'Farangis' ? 40 : 30}px`;
+      d.appendChild(s);
+      $('weights').appendChild(d);
+    }
+  }
+
+  $('chars').textContent = 'ا آ أ إ ء ب پ ت ث ج چ ح خ د ذ ر ز ژ س ش ص ض ط ظ ع غ ف ق ک گ ل م ن و ؤ ه ة ۀ ی ي ئ ى ك لا ' +
+    '۰۱۲۳۴۵۶۷۸۹ ٠١٢٣٤٥٦٧٨٩ 0123456789 ، ؛ ؟ ? ! . : « » ( ) [ ] - – — ٪ % ٫ ٬ + = / \\ | * # < > ~ _ … • × ' +
+    'بَ بِ بُ بً بٍ بٌ بّ بْ بٰ';
+
   const TESTS = [
     'پپپ ببب تتت جچحخ سش عغ فقل ییکگ',
     'فونت آرام و خوانا برای وب‌سایت‌ها',
     'فارسی، طراحی، برنامه‌نویسی، جست‌وجو و نمایش اطلاعات',
     '۱۲۳۴۵۶۷۸۹۰ | 1234567890 | ۱۲۳,۴۵۶٫۷۸ | ۲۵۰٬۰۰۰ تومان | (۱۴۰۵)',
-    'می‌روم، وب‌سایت، خانه‌ها، کتاب‌ها، مسئولیت، نشانه‌گذاری',
+    'می‌خواهم، نمی‌شود، مسئولیت، خانه‌ها، کتاب‌ها، نشانه‌گذاری',
+    'مُحَمَّدٌ، بِسْمِ، شَدَّةً، رَبِّي، كِتَابٌ',
   ];
-  const box = document.getElementById('tests');
-  for (const [fam, w] of [['Ghorbanali', 400], ['Ghorbanali', 700], ['Farangis', 700]]) {
+  const box = $('tests');
+  for (const [family, weight] of [['Ghorbanali', 400], ['Ghorbanali', 700], ['Farangis', 700]]) {
     const h = document.createElement('h3');
-    h.textContent = fam + ' ' + w;
-    h.style.cssText = 'font-size:15px;color:#6b6b6b;margin:20px 0 6px;font-family:Ghorbanali';
+    h.textContent = family + ' ' + weight;
+    h.style.cssText = 'font-size:15px;color:var(--muted);margin:20px 0 6px';
     box.appendChild(h);
-    for (const size of [12, 14, 16, 18]) {
+    for (const px of [12, 14, 16, 18]) {
       for (const t of TESTS) {
         const p = document.createElement('p');
         p.textContent = t;
-        p.style.cssText = `font-family:${fam};font-weight:${w};font-size:${size}px;margin:2px 0;line-height:1.9`;
+        p.style.cssText = `font-family:${family};font-weight:${weight};font-size:${px}px;margin:2px 0;line-height:1.9`;
         box.appendChild(p);
       }
     }
   }
-  const samples = [...document.querySelectorAll('[data-sample]')];
-  const orig = samples.map(e => e.textContent);
-  document.getElementById('try').addEventListener('input', e => {
-    const v = e.target.value.trim();
-    samples.forEach((el, i) => { el.textContent = v || orig[i]; });
-  });
 </script>
 </body>
 </html>

@@ -10,8 +10,8 @@
 
 | فونت | کاربرد | وزن‌ها | فرمت‌ها |
 |---|---|---|---|
-| **قربانعلی** (Ghorbanali) | متن وب‌سایت، اپلیکیشن و رابط کاربری | معمولی (۴۰۰)، ضخیم (۷۰۰) | WOFF2، WOFF، TTF، OTF |
-| **فرنگیس** (Farangis) | تیتر، بنر، بیلبورد، پوستر، تابلوی بزرگراه | ضخیم (۷۰۰)، سیاه (۹۰۰) | WOFF2، WOFF، TTF، OTF |
+| **قربانعلی** (Ghorbanali) | متن وب‌سایت، اپلیکیشن و رابط کاربری | ۶ وزن: نازک ۳۰۰، معمولی ۴۰۰، متوسط ۵۰۰، نیم‌ضخیم ۶۰۰، ضخیم ۷۰۰، خیلی ضخیم ۸۰۰ | WOFF2، WOFF، TTF، OTF |
+| **فرنگیس** (Farangis) | تیتر، بنر، بیلبورد، پوستر، تابلوی بزرگراه | ۵ وزن: متوسط ۵۰۰، نیم‌ضخیم ۶۰۰، ضخیم ۷۰۰، خیلی ضخیم ۸۰۰، سیاه ۹۰۰ | WOFF2، WOFF، TTF، OTF |
 
 ![قربانعلی](specimens/ghorbanali.png)
 
@@ -32,6 +32,8 @@
 ```
 
 <div dir="rtl">
+
+همهٔ وزن‌ها در CSS تعریف شده‌اند؛ کافی است `font-weight` را عوض کنید (مثلاً `font-weight: 500`). فاصلهٔ خطوط در همهٔ وزن‌های یک خانواده یکسان است، پس تغییر وزن متن را جابه‌جا نمی‌کند.
 
 فقط یکی از دو فونت را می‌خواهید؟ به‌جای `fonts.css` از `Ghorbanali/ghorbanali.css` یا `Farangis/farangis.css` استفاده کنید.
 
@@ -62,7 +64,8 @@
 * همهٔ ۳۲ حرف فارسی با شکل‌های آغازی، میانی، پایانی و تنها؛ ترکیب «لا»؛ همزه و حروف همزه‌دار؛ ي، ك، ى و ة عربی
 * ارقام فارسی و عربی (۰ تا ۹) و **ارقام لاتین (0 تا 9)** با ارتفاع یکسان
 * علائم: ، ؛ ؟ ? ! . : « » ( ) [ ] - – — ٪ % ٫ ٬ + = / \ | * # < > ~ _ … • ×
-* اعراب، نیم‌فاصله و کشیده
+* اعراب، نیم‌فاصله و کشیده؛ اعراب ترکیبی (مثل تشدید با فتحه) روی هم می‌نشینند و با هم برخورد نمی‌کنند
+* کرنینگ: فاصلهٔ حروفی که به هم نمی‌چسبند (مثل «را»، «ورود»، «زن») به‌صورت خودکار و نوری تنظیم شده است
 * حروف لاتین (A تا Z) را ندارند؛ برای متن انگلیسی یک فونت لاتین در `font-family` بگذارید.
 
 ### آزمون خودکار
@@ -73,6 +76,7 @@
 * محل اتصال حروف فاصله یا شکاف نداشته باشد.
 * هیچ بخشی از حروف بیرون از کادر خط بریده نشود.
 * اندازهٔ بدنهٔ حروف و فاصله‌ها در محدودهٔ فونت‌های وب استاندارد باشد.
+* اعراب ترکیبی در کلمات نمونه با هم برخورد نکنند.
 
 ### مجوز
 
@@ -88,8 +92,8 @@
 
 | Font | Best for | Style | Weights | Formats |
 |---|---|---|---|---|
-| **Ghorbanali** | Websites, apps, UI, body text | Rounded monoline sans, open counters, hinted for screens | Regular (400), Bold (700) | WOFF2, WOFF, TTF, OTF |
-| **Farangis** | Banners, billboards, posters, highway & street signage, headlines, logos | Geometric Kufi display, sharp corners, square dots | Bold (700), Black (900) | WOFF2, WOFF, TTF, OTF |
+| **Ghorbanali** | Websites, apps, UI, body text | Rounded monoline sans, open counters, hinted for screens | Light 300, Regular 400, Medium 500, SemiBold 600, Bold 700, ExtraBold 800 | WOFF2, WOFF, TTF, OTF |
+| **Farangis** | Banners, billboards, posters, highway & street signage, headlines, logos | Geometric Kufi display, sharp corners, square dots | Medium 500, SemiBold 600, Bold 700, ExtraBold 800, Black 900 | WOFF2, WOFF, TTF, OTF |
 
 ### Use from a CDN (any website, no download)
 
@@ -114,7 +118,7 @@ Single family: `Ghorbanali/ghorbanali.css` or `Farangis/farangis.css`.
 
 ### Coverage
 
-Full Persian alphabet with contextual forms (isolated, initial, medial, final), lam-alef ligatures, Arabic-letter variants (ي ك ى ة), hamza forms, Persian/Arabic-Indic digits and Latin digits 0–9 at matching height, Persian and ASCII punctuation, harakat with mark positioning, ZWNJ and tatweel. Shaping uses standard OpenType features (`init`, `medi`, `fina`, `rlig`, `mark`, `mkmk`). Latin letters are not included — pair with a Latin font.
+Full Persian alphabet with contextual forms (isolated, initial, medial, final), lam-alef ligatures, Arabic-letter variants (ي ك ى ة), hamza forms, Persian/Arabic-Indic digits and Latin digits 0–9 at matching height, Persian and ASCII punctuation, harakat with mark positioning, ZWNJ and tatweel. Shaping uses standard OpenType features (`init`, `medi`, `fina`, `rlig`, `mark`, `mkmk`, `kern`). Kerning is optical and automatic for letters that meet without joining. All weights of a family share the same line metrics. Latin letters are not included — pair with a Latin font.
 
 ### Build and test
 

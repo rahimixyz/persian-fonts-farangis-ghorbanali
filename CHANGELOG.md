@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.200 — 2026-10-31
+
+- **More weights.** Ghorbanali: Light 300, Regular 400, Medium 500, SemiBold 600, Bold 700, ExtraBold 800. Farangis: Medium 500, SemiBold 600, Bold 700, ExtraBold 800, Black 900. New weights are generated from the same skeletons with stroke width, spacing and proportions interpolated between the drawn masters. `ghorbanali.css` and `farangis.css` define every weight.
+- **Same line spacing in every weight** of a family: typo/hhea metrics come from the reference weight, win metrics cover the tallest glyph of all weights (no clipping on Windows).
+- **Kerning** (`kern` feature): optical kerning for letters that meet without joining («را»، «ورود»، «زن»…), measured from the outlines and pulled towards the alef+alef reference distance. It never makes letters touch.
+- **Diacritics:** dammatan is more compact, so it no longer collides with a shadda on the neighbouring letter in the heavy weights. The audit now checks stacked and neighbouring marks for collisions.
+- **ALEF MAKSURA (ى) initial and medial forms are now dotless.** In 1.100 they reused the Persian yeh forms, which have two dots. (ARABIC YEH ي keeps its two dots in every form, as it should.)
+- **Test page** (`index.html`): live weight, size, line-height and word-spacing controls, side-by-side comparison with Vazirmatn or Tahoma, all weights, character set, and diacritics samples.
+
 ## 1.100 — 2026-10-31
 
 Fixes found by an automated audit (`src/audit.py`) and by testing on a live website.
