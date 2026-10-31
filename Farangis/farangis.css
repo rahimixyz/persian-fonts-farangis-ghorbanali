@@ -1,5 +1,26 @@
 /* Farangis — Persian font by Alireza Rahimi, SIL OFL 1.1
-   https://github.com/rahimixyz/persian-fonts-farangis-ghorbanali */
+   https://github.com/rahimixyz/persian-fonts-farangis-ghorbanali
+   Weights: 500, 600, 700, 800, 900 */
+
+@font-face {
+  font-family: "Farangis";
+  src: url("fonts/woff2/Farangis-Medium.woff2") format("woff2"),
+       url("fonts/woff/Farangis-Medium.woff") format("woff"),
+       url("fonts/ttf/Farangis-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Farangis";
+  src: url("fonts/woff2/Farangis-SemiBold.woff2") format("woff2"),
+       url("fonts/woff/Farangis-SemiBold.woff") format("woff"),
+       url("fonts/ttf/Farangis-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
 
 @font-face {
   font-family: "Farangis";
@@ -13,6 +34,16 @@
 
 @font-face {
   font-family: "Farangis";
+  src: url("fonts/woff2/Farangis-ExtraBold.woff2") format("woff2"),
+       url("fonts/woff/Farangis-ExtraBold.woff") format("woff"),
+       url("fonts/ttf/Farangis-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Farangis";
   src: url("fonts/woff2/Farangis-Black.woff2") format("woff2"),
        url("fonts/woff/Farangis-Black.woff") format("woff"),
        url("fonts/ttf/Farangis-Black.ttf") format("truetype");
@@ -20,4 +51,3 @@
   font-style: normal;
   font-display: swap;
 }
-
